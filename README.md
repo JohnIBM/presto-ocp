@@ -21,7 +21,7 @@
 
    ```kubectl get pods -n default
     NAME                     READY   STATUS    RESTARTS   AGE
-    mysql-5477d96fbf-24r7p   1/1     Running   0          6s```
+    mysql-5477d96fbf-24r7p   1/1     Running   0          6s
 
 5. Verify connectivity / working database
    `kubectl run -it --rm --image=mysql:5.7 --restart=Never mysql-client -- mysql -h mysql -udbuser -pdbuser`
@@ -35,12 +35,12 @@
     | information_schema |
     | demodb             |
     +--------------------+
-    2 rows in set (0.00 sec)```
+    2 rows in set (0.00 sec)
 
 6. Quit out of the client
     ```mysql> exit
     Bye
-    pod "mysql-client" deleted```
+    pod "mysql-client" deleted
 
 7. Install Presto Coordinator and Workers in your K8s cluster:
 
