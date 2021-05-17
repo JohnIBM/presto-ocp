@@ -11,6 +11,7 @@
    `kubectl create namespace presto`
 
 3. Apply the persistent volume and mysql deployment 
+
    `kubectl apply -f ./yaml/mysql-deployment.yaml --namespace presto`
    `kubectl apply -f ./mysql-deployment.yaml --namespace presto`
 
