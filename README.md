@@ -13,6 +13,7 @@
 3. Apply the persistent volume and mysql deployment 
 
    `kubectl apply -f ./yaml/mysql-deployment.yaml --namespace presto`
+   
    `kubectl apply -f ./mysql-deployment.yaml --namespace presto`
 
 4. Make sure the pod came up running
