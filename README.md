@@ -11,36 +11,36 @@
 `kubectl create namespace presto`
 
 3. Apply the persistent volume and mysql deployment 
-    kubectl apply -f ./yaml/mysql-deployment.yaml --namespace presto
-    kubectl apply -f ./mysql-deployment.yaml --namespace presto
+ `kubectl apply -f ./yaml/mysql-deployment.yaml --namespace presto`
+ `kubectl apply -f ./mysql-deployment.yaml --namespace presto`
 
 4. Make sure the pod came up running
-    kubectl get pods -n presto
+  `kubectl get pods -n presto`
     
-    Example:
+  Example:
 
-    kubectl get pods -n default
+  `kubectl get pods -n default
     NAME                     READY   STATUS    RESTARTS   AGE
-    mysql-5477d96fbf-24r7p   1/1     Running   0          6s
+    mysql-5477d96fbf-24r7p   1/1     Running   0          6s`
 
 5. Verify connectivity / working database
-    kubectl run -it --rm --image=mysql:5.7 --restart=Never mysql-client -- mysql -h mysql -udbuser -pdbuser
+   `kubectl run -it --rm --image=mysql:5.7 --restart=Never mysql-client -- mysql -h mysql -udbuser -pdbuser`
 
     If you don't see a command prompt, try pressing enter.
 
-    mysql> show databases;
-    +--------------------+
+    `mysql> show databases;`
+    ```+--------------------+
     | Database           |
     +--------------------+
     | information_schema |
     | demodb             |
     +--------------------+
-    2 rows in set (0.00 sec)
+    2 rows in set (0.00 sec)```
 
 6. Quit out of the client
-    mysql> exit
+    ```mysql> exit
     Bye
-    pod "mysql-client" deleted
+    pod "mysql-client" deleted```
 
 7. Install Presto Coordinator and Workers in your K8s cluster:
 
