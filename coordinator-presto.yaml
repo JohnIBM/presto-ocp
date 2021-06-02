@@ -22,24 +22,16 @@ spec:
     spec:
       containers:
         - name: presto-coordinator
-          image: thiagodiogo/docker-presto:0.214
+          image: asifkazi/prestodb
           imagePullPolicy: Always
           env:
-            - name: CONFIG_CONF_DISCOVERY___SERVER_ENABLED
-              value: "true"
-            - name: JVM_CONF_XMS
-              value: "8G"
-            - name: JVM_CONF_XMX
-              value: "12G"
-            - name: HIVE_CONF_HIVE_METASTORE_URI
-              value: thrift://hive-metastore.presto:9083
-            - name: LOG_CONF_COM_FACEBOOK_PRESTO
-              value: INFO
+            - name:  PRESTO_JVM_HEAP_SIZE 
+              value: "4"
           ports:
             - containerPort: 8080
             - containerPort: 8889
           resources:
             requests:
-              memory: "8Gi"
+              memory: "4Gi"
             limits:
-              memory: "12Gi"
+              memory: "4Gi"

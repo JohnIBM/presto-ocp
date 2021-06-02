@@ -22,27 +22,19 @@ spec:
     spec:
       containers:
         - name: presto-coordinator
-          image: thiagodiogo/docker-presto:0.214
+          image:  asifkazi/prestodb
           imagePullPolicy: Always
           env:
-            - name: CONFIG_CONF_DISCOVERY___SERVER_ENABLED
-              value: "true"
-            - name: JVM_CONF_XMS
-              value: "8G"
-            - name: JVM_CONF_XMX
-              value: "12G"
-            - name: HIVE_CONF_HIVE_METASTORE_URI
-              value: thrift://hive-metastore.presto:9083
-            - name: LOG_CONF_COM_FACEBOOK_PRESTO
-              value: INFO
+            - name:  PRESTO_JVM_HEAP_SIZE
+              value: "4"
           ports:
             - containerPort: 8080
             - containerPort: 8889
           resources:
             requests:
-              memory: "8Gi"
+              memory: "4Gi"
             limits:
-              memory: "12Gi"
+              memory: "4Gi"
 
 ---
 apiVersion: v1
@@ -50,7 +42,7 @@ kind: ReplicationController
 metadata:
   name: presto-worker
 spec:
-  replicas: 6 #16
+  replicas: 2 #16
   template:
     metadata:
       labels:
@@ -58,33 +50,15 @@ spec:
     spec:
       containers:
         - name: presto-worker
-          image: thiagodiogo/docker-presto:0.214
+          image: asifkazi/prestodb
           imagePullPolicy: Always
           env:
-            - name: CONFIG_CONF_COORDINATOR
-              value: "false"
-            - name: CONFIG_CONF_QUERY_MAX___MEMORY___PER___NODE
-              value: 35GB
-            - name: CONFIG_CONF_QUERY_MAX___TOTAL___MEMORY___PER___NODE
-              value: 35GB
-            - name: CONFIG_CONF_MEMORY_HEAP___HEADROOM___PER___NODE
-              value: 4GB
-            - name: CONFIG_CONF_RESOURCES_RESERVED___SYSTEM___MEMORY
-              value: 4GB
-            - name: CONFIG_CONF_DISCOVERY_URI
-              value: http://presto-coordinator.presto:8080
-            - name: JVM_CONF_XMS
-              value: "40G"
-            - name: JVM_CONF_XMX
-              value: "50G"
-            - name: HIVE_CONF_HIVE_METASTORE_URI
-              value: thrift://hive-metastore.presto:9083
-            - name: LOG_CONF_COM_FACEBOOK_PRESTO
-              value: INFO
+            - name: PRESTO_JVM_HEAP_SIZE
+              value: "4"
           resources:
             requests:
-              memory: "40Gi"
+              memory: "4Gi"
             limits:
-              memory: "50Gi"
+              memory: "4Gi"
           ports:
             - containerPort: 8889
