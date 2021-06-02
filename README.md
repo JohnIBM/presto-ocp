@@ -15,7 +15,7 @@
    `kubectl apply -f ./mysql-pv.yaml --namespace presto`
    
    `kubectl apply -f ./mysql-deployment.yaml --namespace presto`
-
+   
 4. Make sure the pod came up running
    `kubectl get pods -n presto`
     
@@ -26,7 +26,7 @@
     mysql-5477d96fbf-24r7p   1/1     Running   0          6s
 
 5. Verify connectivity / working database
-   `kubectl run -it --rm --image=mysql:5.7 --restart=Never mysql-client -- mysql -h mysql -udbuser -pdbuser`
+   `kubectl run -it --rm --image=mysql:5.7 --restart=Never mysql-client -n presto -- mysql -h mysql -udbuser -pdbuser`
 
     If you don't see a command prompt, try pressing enter.
 
