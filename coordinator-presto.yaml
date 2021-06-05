@@ -25,13 +25,19 @@ spec:
           image: asifkazi/prestodb
           imagePullPolicy: Always
           env:
-            - name:  PRESTO_JVM_HEAP_SIZE 
+            - name:  PRESTO_JVM_HEAP_SIZE
+              value: "6"
+            - name:  PRESTO_MAX_MEMORY
+              value: "6"
+            - name:  PRESTO_MAX_MEMORY_PER_NODE
               value: "4"
+            - name:  HTTP_SERVER_PORT
+              value: "8080"
           ports:
             - containerPort: 8080
             - containerPort: 8889
           resources:
             requests:
-              memory: "4Gi"
+              memory: "8Gi"
             limits:
-              memory: "4Gi"
+              memory: "8Gi"
