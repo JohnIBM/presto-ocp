@@ -22,17 +22,13 @@ spec:
     spec:
       containers:
         - name: presto-coordinator
-          image: asifkazi/prestodb
+          image:  asifkazi/presto-on-docker
           imagePullPolicy: Always
           env:
-            - name:  PRESTO_JVM_HEAP_SIZE
-              value: "6"
-            - name:  PRESTO_MAX_MEMORY
-              value: "6"
-            - name:  PRESTO_MAX_MEMORY_PER_NODE
-              value: "4"
-            - name:  HTTP_SERVER_PORT
-              value: "8080"
+            - name:  PRESTO_CONF_COORDINATOR
+              value: "true"
+            - name:  PRESTO_CONF_DISCOVERY_URI
+              value: "http://presto-coordinator:8080"
           ports:
             - containerPort: 8080
             - containerPort: 8889
