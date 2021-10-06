@@ -85,3 +85,17 @@ spec:
       - name: presto-persistent-storage
         persistentVolumeClaim:
           claimName: presto-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: presto-pvc
+spec:
+  storageClassName: ibm-spectrum-scale-csi-remote-fileset
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+
+
