@@ -14,9 +14,10 @@ kind: Deployment
 metadata:
   name: presto-coordinator
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      name: presto-coordinator
+      app: presto-coordinator
   template:
     metadata:
       labels:
@@ -52,9 +53,10 @@ kind: Deployment
 metadata:
   name: presto-worker
 spec:
+  replicas: 2
   selector:
     matchLabels:
-      name: presto-worker
+      app: presto-worker
   template:
     metadata:
       labels:
