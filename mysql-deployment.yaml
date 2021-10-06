@@ -60,7 +60,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-pvc
 spec:
-  storageClassName: ibm-spectrum-scale-csi-remote-fileset
+  storageClassName: presto-sc
   accessModes:
     - ReadWriteOnce
   resources:

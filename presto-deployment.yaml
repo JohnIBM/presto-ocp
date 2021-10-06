@@ -91,7 +91,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: presto-pvc
 spec:
-  storageClassName: ibm-spectrum-scale-csi-remote-fileset
+  storageClassName: presto-sc
   accessModes:
     - ReadWriteMany
   resources:
