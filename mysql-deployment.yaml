@@ -1,3 +1,4 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -24,28 +25,46 @@ spec:
       labels:
         app: mysql
     spec:
-      containers:
+      containers:      
       - name: mysql
         image: mysql:5.7
         env:
           # Use secret in real usage
         - name: MYSQL_ROOT_PASSWORD
-          value: P@ssw0rd$$
+          value: Passw0rd
         - name: MYSQL_DATABASE
-          value: demodb
+          value: sampledb
         - name: MYSQL_USER
-          value: dbuser
+          value: mysql
           # Use secret in real usage
         - name: MYSQL_PASSWORD
-          value: dbuser
+          value: Passw0rd
         ports:
         - containerPort: 3306
           name: mysql
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
+        resources: 
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+
       volumes:
       - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: mysql-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pvc
+spec:
+  storageClassName: ibm-spectrum-scale-csi-remote-fileset
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
 

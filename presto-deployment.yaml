@@ -1,0 +1,85 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: presto-coordinator
+spec:
+  ports:
+    - name: client
+      port: 8080
+  selector:
+    app: presto-coordinator
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: presto-coordinator
+spec:
+  selector:
+    matchLabels:
+      name: presto-coordinator
+  template:
+    metadata:
+      labels:
+        app: presto-coordinator
+    spec:
+      containers:
+        - name: presto-coordinator
+          image:  asifkazi/presto-on-docker
+          imagePullPolicy: Always
+          env:
+            - name:  PRESTO_CONF_COORDINATOR
+              value: "true"
+            - name:  PRESTO_CONF_DISCOVERY_URI
+              value: "http://presto-coordinator:8080"
+          ports:
+            - containerPort: 8080
+            - containerPort: 8889
+          volumeMounts:
+            - name: presto-persistent-storage
+              mountPath: /usr/local/bin/
+          resources:
+            limits:
+              memory: "8Gi"
+              cpu: "500m"
+      volumes:
+      - name: presto-persistent-storage
+        persistentVolumeClaim:
+          claimName: presto-pvc
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: presto-worker
+spec:
+  selector:
+    matchLabels:
+      name: presto-worker
+  template:
+    metadata:
+      labels:
+        app: presto-worker
+    spec:
+      containers:
+        - name: presto-worker
+          image: asifkazi/presto-on-docker
+          imagePullPolicy: Always
+          env:
+            - name: PRESTO_CONF_COORDINATOR
+              value: "false"
+            - name:  PRESTO_CONF_DISCOVERY_URI
+              value: "http://presto-coordinator:8080"
+          volumeMounts:
+            - name: presto-persistent-storage
+              mountPath: /usr/local/bin/
+              
+          resources:
+            limits:
+              memory: "8Gi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8889
+      volumes:
+      - name: presto-persistent-storage
+        persistentVolumeClaim:
+          claimName: presto-pvc
